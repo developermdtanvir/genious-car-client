@@ -1,11 +1,17 @@
-import React from 'react'
-import logo from '../../../../assets/logo.svg'
+import React from 'react';
+import { FaFacebookSquare, FaGithub, FaYoutube } from 'react-icons/fa';
+import logo from '../../../../assets/logo.svg';
 export const Footer = () => {
     return (
         <footer className="footer p-32 bg-black text-white">
             <div>
                 <img src={logo} alt="" />
                 <p>ACME Industries Ltd.<br />Providing reliable tech since 1992</p>
+                <div className=' flex gap-x-7 text-2xl'>
+                    <FaFacebookSquare className='text-blue-900 hover:-translate-y-2 cursor-pointer duration-300' />
+                    <FaYoutube className='text-red-700 hover:-translate-y-2 cursor-pointer duration-300' />
+                    <a target='_blank' href="https://github.com/mdtanvirgit" rel="noreferrer"><FaGithub className=' text-slate-700 hover:-translate-y-2 cursor-pointer duration-300' /></a>
+                </div>
             </div>
             <div>
                 <span className="footer-title">Services</span>
