@@ -43,6 +43,14 @@ export const Signup = () => {
                     newUser.email = email;
                     newUser.success = true
                     setUser(newUser);
+                    fetch(`http://localhost:5000/login`, {
+                        method: 'POST', // or 'PUT'
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(newUser),
+                    }).then(res => res.json())
+                        .then(data => console.log(data));
                 })
                 .catch((error) => {
                     const errorMessage = error.message;
@@ -76,7 +84,7 @@ export const Signup = () => {
                 </div>
                 <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100 space-y-10">
                     <form onSubmit={handleSubmit} className="card-body">
-                        <h1 className="text-5xl text-center font-bold">Login now!</h1>
+                        <h1 className="text-5xl text-center font-bold">Register now!</h1>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Name</span>
