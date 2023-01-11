@@ -1,19 +1,29 @@
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import React from 'react';
+import React, { useContext } from 'react';
 import { FaFacebookF } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { Link } from "react-router-dom";
 import login from '../../assets/images/login/login.svg';
+import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
 import app from '../../firebase/firebase.config';
 export const Login = () => {
+    const { loginUser } = useContext(AuthContext)
+    const auth = getAuth(app);
     const handleLogin = e => {
         const email = e.target.email.value;
         const password = e.target.password.value;
-        console.log('email:', email, 'Password:', password)
+        loginUser(auth, email, password)
+            .then(res => {
+                console.log(res);
+            })
+            .catch((error) => {
+                const errorMessage = error.message;
+                console.log(errorMessage);
+            });
+
         e.preventDefault()
     }
 
-    const auth = getAuth(app);
 
     const googleProvider = new GoogleAuthProvider();
     const handleGoogleLogin = () => {
