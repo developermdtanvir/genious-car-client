@@ -10,14 +10,14 @@ export const Signup = () => {
     const auth = getAuth(app);
 
     const { createUser } = useContext(AuthContext)
-    const [user, setUser] = useState({
+    const [users, setUsers] = useState({
         name: '',
         email: '',
         password: '',
         isLogin: false,
         success: false
     })
-    console.log('Name:', user.email, 'password', user.password)
+    console.log('Name:', users.email, 'password', users.password)
     const handleBlur = e => {
         let isValid;
         if (e.target.name === 'email') {
@@ -27,22 +27,22 @@ export const Signup = () => {
             isValid = /^[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(e.target.value);
         }
         if (isValid) {
-            const newUser = { ...user };
+            const newUser = { ...users };
             newUser[e.target.name] = e.target.value;
-            setUser(newUser);
+            setUsers(newUser);
         }
         e.preventDefault()
     }
     const handleSubmit = (e) => {
-        if (user.email && user.password) {
-            createUser(auth, user.email, user.password)
+        if (users.email && users.password) {
+            createUser(auth, users.email, users.password)
                 .then(res => {
                     console.log(res);
                     const { email } = res.user;
-                    const newUser = { ...user };
+                    const newUser = { ...users };
                     newUser.email = email;
                     newUser.success = true
-                    setUser(newUser);
+                    setUsers(newUser);
                     fetch(`http://localhost:5000/login`, {
                         method: 'POST', // or 'PUT'
                         headers: {
@@ -66,12 +66,12 @@ export const Signup = () => {
         signInWithPopup(auth, googleProvider)
             .then(result => {
                 const { displayName, email } = result.user;
-                const newUser = { ...user };
+                const newUser = { ...users };
                 newUser.name = displayName
                 newUser.email = email
                 newUser.success = true;
                 newUser.isLogin = true
-                setUser(newUser);
+                setUsers(newUser);
             }).catch(error => {
 
             });
@@ -113,7 +113,7 @@ export const Signup = () => {
                         <FaFacebookF className=' text-3xl cursor-pointer' />
                         <FcGoogle onClick={handleGoogleSignUp} className=' text-3xl cursor-pointer' />
                     </div>
-                    {user.success && alert('User Created Successfully')}
+                    {users.success && alert('User Created Successfully')}
                 </div>
             </div>
         </div>

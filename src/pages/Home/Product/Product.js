@@ -3,6 +3,7 @@ import { ProductCard } from './ProductCard';
 
 export const Product = () => {
     const [products, setProducts] = useState([]);
+    console.log(products);
     useEffect(() => {
         fetch(`http://localhost:5000/service`)
             .then(res => res.json())

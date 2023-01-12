@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../../../../assets/logo.svg'
+import { AuthContext } from '../../../../Contexts/AuthProvider/AuthProvider'
 export const Header = () => {
+    const { user } = useContext(AuthContext)
     const menuItem = <>
         <li className=' font-semibold'><Link to='/'>Home</Link></li>
-        <li className=' font-semibold'><Link to='/login'>Login</Link></li>
+        {user?.email ? <li className=' font-semibold'><Link to='/order'>Order</Link></li> :
+            <li className=' font-semibold'><Link to='/login'>Login</Link></li>}
     </>
     return (
-        <div className="navbar bg-white">
+        <div className="navbar bg-white sticky">
             <div className="navbar-start">
                 <div className="dropdown">
                     <label tabIndex={0} className="btn btn-ghost lg:hidden">

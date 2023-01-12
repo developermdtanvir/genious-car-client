@@ -3,9 +3,12 @@ import { ServicCard } from './ServicCard';
 export const Services = () => {
     const [services, setServices] = useState([])
     useEffect(() => {
-        fetch('services.json')
+        fetch(`http://localhost:5000/service`)
             .then(res => res.json())
-            .then(data => setServices(data));
+            .then(data => {
+                setServices(data);
+                console.log(data);
+            });
     }, [])
     console.log(services);
     return (
