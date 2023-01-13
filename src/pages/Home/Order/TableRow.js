@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { MdCancel } from 'react-icons/md';
-export const TableRow = ({ order }) => {
-    const { serviceName, name, email, service } = order;
-
+export const TableRow = ({ order, handleDeletOrder, handleStatusUpdate }) => {
+    const { serviceName, name, email, service, _id, status } = order;
+    console.log(order);
     const [img, setImg] = useState({})
     console.log(img);
     useEffect(() => {
@@ -11,21 +11,12 @@ export const TableRow = ({ order }) => {
             .then(data => setImg(data));
     }, [service]);
 
-    const handleDeletOrder = id => {
-        const proside = window.confirm('Are You Sure delete');
-        if (proside) {
-            fetch(`http://localhost:5000/order/${id}`, {
-                method: 'DELETE'
-            })
-                .then(res => res.json())
-                .then(data => console.log(data));
-        }
-    }
+
     return (
         <div> <tr>
             <th>
                 <label>
-                    <MdCancel onClick={() => handleDeletOrder(service)} className=' text-3xl cursor-pointer' />
+                    <MdCancel onClick={() => handleDeletOrder(_id)} className=' text-3xl cursor-pointer' />
                 </label>
             </th>
             <td>
@@ -49,7 +40,7 @@ export const TableRow = ({ order }) => {
             </td>
             <td>{serviceName}</td>
             <th>
-                <button className="btn btn-ghost btn-xs">details</button>
+                <button onClick={() => handleStatusUpdate(_id)} className="btn btn-ghost btn-xs">{status ? status : 'PANDING'}</button>
             </th>
         </tr>
         </div>

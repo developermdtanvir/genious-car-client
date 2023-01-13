@@ -4,6 +4,7 @@ import { Home } from "../../pages/Home/Home/Home";
 import { Order } from "../../pages/Home/Order/Order";
 import { ProductDetails } from "../../pages/Home/Product/ProductDetails";
 import { Login } from "../../pages/Login/Login";
+import { LogOut } from "../../pages/LogOut/LogOut";
 import { Signup } from "../../pages/Signup/Signup";
 
 const { createBrowserRouter } = require("react-router-dom");
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
             {
                 path: '/order',
                 element: <Order />
+            },
+            {
+                path: '/logout',
+                element: <LogOut />
             }
         ]
     },
