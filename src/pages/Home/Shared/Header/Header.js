@@ -1,16 +1,22 @@
-import React, { useContext } from 'react'
-import { Link } from 'react-router-dom'
-import logo from '../../../../assets/logo.svg'
-import { AuthContext } from '../../../../Contexts/AuthProvider/AuthProvider'
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import logo from '../../../../assets/logo.svg';
+import { AuthContext } from '../../../../Contexts/AuthProvider/AuthProvider';
 export const Header = () => {
-    const { user } = useContext(AuthContext)
+    const { user, logOutUser } = useContext(AuthContext);
+    const handleLogOut = () => {
+        logOutUser()
+            .then(res => console.log(res))
+            .catch(data => console.log(data));
+    }
     const menuItem = <>
         <li className=' font-semibold'><Link to='/'>Home</Link></li>
-        {user?.email ? <li className=' font-semibold'><Link to='/order'>Order</Link></li> :
+        {user?.email ? <><li className=' font-semibold'><Link to='/order'>Order</Link></li>
+            <li className=' font-semibold'><Link onClick={handleLogOut} className=' btn-ghost' to='/order'>Log Out</Link></li></> :
             <li className=' font-semibold'><Link to='/login'>Login</Link></li>}
     </>
     return (
-        <div className="navbar bg-white sticky">
+        <div className="navbar bg-white backdrop-brightness-50">
             <div className="navbar-start">
                 <div className="dropdown">
                     <label tabIndex={0} className="btn btn-ghost lg:hidden">

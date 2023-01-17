@@ -6,6 +6,7 @@ import { ProductDetails } from "../../pages/Home/Product/ProductDetails";
 import { Login } from "../../pages/Login/Login";
 import { LogOut } from "../../pages/LogOut/LogOut";
 import { Signup } from "../../pages/Signup/Signup";
+import { PraivetRouter } from "../PraivetRouter";
 
 const { createBrowserRouter } = require("react-router-dom");
 
@@ -32,12 +33,12 @@ const router = createBrowserRouter([
             },
             {
                 path: '/checkout/:id',
-                element: <Checkout />,
+                element: <PraivetRouter><Checkout /></PraivetRouter>,
                 loader: ({ params }) => fetch(`http://localhost:5000/service/${params.id}`)
             },
             {
                 path: '/order',
-                element: <Order />
+                element: <PraivetRouter><Order /></PraivetRouter>
             },
             {
                 path: '/logout',

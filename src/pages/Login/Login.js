@@ -2,11 +2,17 @@ import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import React, { useContext } from 'react';
 import { FaFacebookF } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import login from '../../assets/images/login/login.svg';
 import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
 import app from '../../firebase/firebase.config';
 export const Login = () => {
+    const location = useLocation()
+    const navigate = useNavigate()
+
+    let from = location.state?.from?.pathname || "/";
+
+
     const { loginUser } = useContext(AuthContext)
     const auth = getAuth(app);
     const handleLogin = e => {
@@ -15,6 +21,16 @@ export const Login = () => {
         loginUser(auth, email, password)
             .then(res => {
                 console.log(res);
+                const user = res.user;
+                fetch('http://localhost:5000/jwt', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(user)
+                }).then(res => res.json())
+                    .then(data => console.log(data));
+                // navigate(from, { replace: true })
             })
             .catch((error) => {
                 const errorMessage = error.message;
@@ -28,8 +44,26 @@ export const Login = () => {
     const googleProvider = new GoogleAuthProvider();
     const handleGoogleLogin = () => {
         signInWithPopup(auth, googleProvider)
-            .then((result) => {
-                console.log(result);
+            .then((res) => {
+                const user = res.user;
+                const currentUser = {
+                    email: user.email
+                }
+                fetch('http://localhost:5000/jwt', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(currentUser)
+                }).then(res => res.json())
+                    .then(data => {
+
+                        //localstorage is easyest but not best to place store in data
+                        console.log(data)
+                        localStorage.setItem('token', data.token)
+                        sessionStorage.setItem('token', data.token)
+                    });
+                // navigate(from, { replace: true })
             }).catch((error) => {
 
             });

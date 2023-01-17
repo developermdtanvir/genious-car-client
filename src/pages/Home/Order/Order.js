@@ -6,7 +6,11 @@ export const Order = () => {
     const [order, setOrder] = useState([]);
     const { user } = useContext(AuthContext);
     useEffect(() => {
-        fetch(`http://localhost:5000/order?email=${user?.email}`)
+        fetch(`http://localhost:5000/order?email=${user?.email}`, {
+            headers: {
+                autorizetion: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
             .then(res => res.json())
             .then(data => setOrder(data));
 

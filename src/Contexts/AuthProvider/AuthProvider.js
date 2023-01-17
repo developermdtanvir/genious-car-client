@@ -3,9 +3,9 @@ import React, { createContext, useEffect, useState } from 'react';
 import app from '../../firebase/firebase.config';
 
 export const AuthContext = createContext()
-const auth = getAuth(app);
 
 export const AuthProvider = ({ children }) => {
+    const auth = getAuth(app);
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
     const loginUser = (auth, email, password) => {
         return signInWithEmailAndPassword(auth, email, password);
     }
-    const logOutUser = (auth) => {
+    const logOutUser = () => {
         return signOut(auth);
     }
     useEffect(() => {
