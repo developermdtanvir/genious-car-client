@@ -4,14 +4,20 @@ import { AuthContext } from '../../../Contexts/AuthProvider/AuthProvider';
 import { TableRow } from './TableRow';
 export const Order = () => {
     const [order, setOrder] = useState([]);
-    const { user } = useContext(AuthContext);
+    const { user, logOutUser } = useContext(AuthContext);
     useEffect(() => {
         fetch(`http://localhost:5000/order?email=${user?.email}`, {
             headers: {
-                autorizetion: `Bearer ${localStorage.getItem('token')}`
+                autorizetion: `bearer ${localStorage.getItem('token')}`
             }
         })
-            .then(res => res.json())
+            .then(res => {
+                if (res.status === 401 || res.status === 403) {
+                    logOutUser()
+                    window.location.reload()
+                }
+                return res.json()
+            })
             .then(data => setOrder(data));
 
     }, [user?.email])
