@@ -5,7 +5,7 @@ export const Product = () => {
     const [products, setProducts] = useState([]);
     console.log(products);
     useEffect(() => {
-        fetch(`http://localhost:5000/service`)
+        fetch(`https://genious-car-server-topaz.vercel.app/service`)
             .then(res => res.json())
             .then(data => setProducts(data));
     }, []);

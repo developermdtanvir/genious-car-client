@@ -43,7 +43,7 @@ export const Signup = () => {
                     newUser.email = email;
                     newUser.success = true
                     setUsers(newUser);
-                    fetch(`http://localhost:5000/login`, {
+                    fetch(`https://genious-car-server-topaz.vercel.app/login`, {
                         method: 'POST', // or 'PUT'
                         headers: {
                             'Content-Type': 'application/json',
